@@ -1,0 +1,23 @@
+# Maven
+target/
+
+# Gradle
+build/
+.gradle/
+
+# Spring Boot
+*.log
+*.class
+!application*.yml
+!application*.properties
+
+# IDE files
+.idea/
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
