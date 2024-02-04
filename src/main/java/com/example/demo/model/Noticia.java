@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import java.util.List;
 
 
 /**
@@ -16,8 +17,6 @@ public class Noticia implements Serializable {
 	@Id
 	private int id;
 
-	private int idUser;
-
 	private String noticetext;
 
 	private String photo;
@@ -26,8 +25,16 @@ public class Noticia implements Serializable {
 
 	private String title;
 
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="id_user")
+	private User user;
+
+	//bi-directional many-to-one association to NoticiasFav
+	@OneToMany(mappedBy="noticia")
+	private List<NoticiasFav> noticiasFavs;
+
 	public Noticia() {
-		super();
 	}
 
 	public int getId() {
@@ -36,14 +43,6 @@ public class Noticia implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getIdUser() {
-		return this.idUser;
-	}
-
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
 	}
 
 	public String getNoticetext() {
@@ -58,8 +57,8 @@ public class Noticia implements Serializable {
 		return this.photo;
 	}
 
-	public void setPhoto(String string) {
-		this.photo = string;
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	public String getSubtitle() {
@@ -76,6 +75,36 @@ public class Noticia implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<NoticiasFav> getNoticiasFavs() {
+		return this.noticiasFavs;
+	}
+
+	public void setNoticiasFavs(List<NoticiasFav> noticiasFavs) {
+		this.noticiasFavs = noticiasFavs;
+	}
+
+	public NoticiasFav addNoticiasFav(NoticiasFav noticiasFav) {
+		getNoticiasFavs().add(noticiasFav);
+		noticiasFav.setNoticia(this);
+
+		return noticiasFav;
+	}
+
+	public NoticiasFav removeNoticiasFav(NoticiasFav noticiasFav) {
+		getNoticiasFavs().remove(noticiasFav);
+		noticiasFav.setNoticia(null);
+
+		return noticiasFav;
 	}
 
 }

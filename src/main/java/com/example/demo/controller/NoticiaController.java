@@ -60,9 +60,9 @@ public class NoticiaController {
 		
 		JwtTokenProvider jtw = new JwtTokenProvider();
 		Noticia n = new Noticia();
-		int idUser = usRep.findByUsername(jtw.getEmailFromToken(request.getHeader("Authorization").substring("Bearer ".length()))).get().getId();
+		User idUser = usRep.findByUsername(jtw.getEmailFromToken(request.getHeader("Authorization").substring("Bearer ".length()))).get();
 		System.out.println(idUser);
-		n.setIdUser(idUser);
+		n.setUser(idUser);
 		n.setNoticetext(noticia.getNoticetext());
 		n.setPhoto(noticia.getPhoto());
 		n.setTitle(noticia.getTitle());
@@ -82,8 +82,8 @@ public class NoticiaController {
 	public List<DTO> listarMisNoticias(HttpServletRequest request) {
 		List<Noticia> ln = new ArrayList<Noticia>();
 		JwtTokenProvider jtw = new JwtTokenProvider();
-		int idUser = usRep.findByUsername(jtw.getEmailFromToken(request.getHeader("Authorization").substring("Bearer ".length()))).get().getId();
-		ln = notRep.findByIdUser(idUser);
+		User idUser = usRep.findByUsername(jtw.getEmailFromToken(request.getHeader("Authorization").substring("Bearer ".length()))).get();
+		ln = notRep.findByUser(idUser);
 		List<DTO> jsonList = new ArrayList<DTO>();
 		if (ln != null) {
 			for (Noticia n : ln) {
@@ -107,9 +107,9 @@ public class NoticiaController {
 		
 		JwtTokenProvider jtw = new JwtTokenProvider();
 		Noticia n = new Noticia();
-		int idUser = usRep.findByUsername(jtw.getEmailFromToken(request.getHeader("Authorization").substring("Bearer ".length()))).get().getId();
+		User idUser = usRep.findByUsername(jtw.getEmailFromToken(request.getHeader("Authorization").substring("Bearer ".length()))).get();
 		System.out.println(idUser);
-		n.setIdUser(idUser);
+		n.setUser(idUser);
 		n.setNoticetext(noticia.getNoticetext());
 		n.setPhoto(noticia.getPhoto());
 		n.setTitle(noticia.getTitle());
